@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style> 
+	    { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
+        }
+        :root { 
+            --nav-dark: #131921; 
+            --accent: #febd69; 
+            --btn: #ff9900; 
+            --hover: #f7ca00; 
+            --subnav: #232f3e;
+            --price: #b12704;
+        }
+        
+        header { 
+            background: var(--nav-dark); 
+            color: white; 
+            padding: 0.6rem 1rem; 
+        }
+        .nav-top { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+            gap: 0.5rem; 
+        }
+        .logo { 
+            font-size: 1.4rem; 
+            font-weight: bold; 
+            color: white; 
+            text-decoration: none; 
+        }
+        .logo:hover { color: var(--accent); }
+        .search-bar { 
+            flex: 1; 
+            min-width: 250px; 
+            margin: 0 1rem; 
+            display: flex; 
+        }
+        .search-bar input { 
+            flex: 1; 
+            padding: 0.6rem 0.9rem; 
+            border: none; 
+            border-radius: 4px 0 0 4px; 
+            font-size: 1rem; 
+            outline: none;
+        }
+        .search-btn { 
+            padding: 0 1rem; 
+            background: var(--accent); 
+            border: none; 
+            border-radius: 0 4px 4px 0; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: background 0.2s;
+        }
+        .search-btn:hover { background: var(--hover); }
+        .nav-links { 
+            display: flex; 
+            gap: 1.5rem; 
+            align-items: center; 
+            font-size: 0.9rem; 
+            flex-wrap: wrap;
+        }
+        .nav-links a { 
+            color: white; 
+            text-decoration: none; 
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { text-decoration: underline; color: var(--accent); }
+        .cart-icon { font-size: 1.2rem; }
+        
+        .sub-nav { 
+            background: var(--subnav); 
+            padding: 0.5rem 1rem; 
+        }
+        .sub-nav ul { 
+            display: flex; 
+            gap: 1.2rem; 
+            list-style: none; 
+            flex-wrap: wrap; 
+        }
+        .sub-nav a { 
+            color: white; 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            transition: color 0.2s;
+        }
+        .sub-nav a:hover { color: var(--accent); }
+        
+        .hero { 
+            background: linear-gradient(to bottom, var(--subnav), #e6e6e6); 
+            padding: 2.5rem 1rem; 
+            text-align: center; 
+            color: white; 
+        }
+        .hero h1 { 
+            font-size: 1.8rem; 
+            margin-bottom: 0.5rem; 
+        }
+        .hero p { 
+            font-size: 1.1rem; 
+            margin-bottom: 0.5rem; 
+        }
+        
+        /* === PRODUCT GRID — 3 PER ROW === */
+        .products { 
+            max-width: 1200px; 
+            margin: 2rem auto; 
+            padding: 0 1rem; 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 1.5rem; 
+        }
+        .product-card { 
+            background: white; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            padding: 1.25rem; 
+            transition: transform 0.2s, box-shadow 0.2s; 
+        }
+        .product-card:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        }
+        /* Video Player Container */
+        .product-video { 
+            width: 100%; 
+            height: 180px; 
+            border-radius: 4px; 
+            margin-bottom: 1rem; 
+            overflow: hidden;
+            background: #000;
+        }
+        .product-video video,
+        .product-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+        }
+        .product-title { 
+            font-size: 0.95rem; 
+            margin-bottom: 0.75rem; 
+            color: #333; 
+            line-height: 1.4;
+        }
+        .price { 
+            font-size: 1.15rem; 
+            font-weight: bold; 
+            color: var(--price); 
+            margin-bottom: 1rem; 
+        }
+        .add-btn { 
+            width: 100%; 
+            padding: 0.6rem; 
+            background: var(--btn); 
+            border: none; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: background 0.2s;
+        }
+        .add-btn:hover { background: var(--hover); }
+		        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            transition: all 0.25s ease; /* Smooth animation for ALL changes */
+            margin: 0.5rem;
+        }
+
+        /* --- Button 1: Grow + Darken --- */
+        .btn-grow {
+            background: #2563eb;
+        }
+        .btn-grow:hover {
+            background: #1d4ed8;
+            transform: scale(1.08); /* Grows 8% bigger */
+        }
+
+        /* --- Button 2: Glow Effect --- */
+        .btn-glow {
+            background: #16a34a;
+        }
+        .btn-glow:hover {
+            background: #15803d;
+            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.25),
+                        0 4px 12px rgba(22, 163, 74, 0.35); /* Outer glow + soft shadow */
+        }
+
+        /* --- Button 3: Lift Up Effect --- */
+        .btn-lift {
+            background: #9333ea;
+        }
+        .btn-lift:hover {
+            background: #7e22ce;
+            transform: translateY(-3px); /* Moves up 3px */
+            box-shadow: 0 6px 16px rgba(147, 51, 234, 0.3);
+        }
+
+        /* --- Button 4: Color Swap --- */
+        .btn-swap {
+            background: white;
+            color: #dc2626;
+            border: 2px solid #dc2626;
+        }
+        .btn-swap:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        /* === OUTPUT BOX === */
+        #output {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            background: #ffffff;
+            border-radius: 10px;
+            min-height: 60px;
+            border-left: 4px solid #2563eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Optional: Highlight output when updated */
+        #output.active {
+            border-left-color: #16a34a;
+            background: #f0fdf4;
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 540px) {
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        footer { 
+            background: var(--nav-dark); 
+            color: white; 
+            padding: 2rem 1rem; 
+            margin-top: 3rem; 
+        }
+        .footer-grid { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 2rem; 
+        }
+        .footer-col h3 { 
+            margin-bottom: 1rem; 
+            font-size: 1rem; 
+            color: #ddd; 
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.6rem; }
+        .footer-col a { 
+            color: #bbb; 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: white; text-decoration: underline; }
+        .copyright { 
+            text-align: center; 
+            margin-top: 2rem; 
+            padding-top: 1rem; 
+            border-top: #333 solid 1px; 
+            font-size: 0.8rem; 
+            color: #888; 
+        }
+    </style>
+</head>
+<body>	
+    <header>
+        <div class="nav-top">
+            <form class="search-bar" action="#" method="get">
+            <input type="search" name="q" placeholder="Search">
+			<button type="submit" button="Search">🔍</button>	
+            </form>
+        <!-- Username + Sign Up -->
+            <div style="display: flex; flex-direction: column; margin-right: 15px;">
+            <input type="text" placeholder="Username" style="margin-bottom: 6px; padding: 6px;">
+            <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 6px 12px; width: 100%;">Sign Up?</button>
+        </div>
+
+        <!-- Password + Forgot Password — 100px right margin -->
+            <div style="display: flex; flex-direction: column; margin-right: 100px;">
+            <input type="text" placeholder="Password" style="margin-bottom: 6px; padding: 6px;">
+            <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 6px 12px; width: 100%;">Forgot Password?</button>
+        </div>
+    </header>
+
+    <nav class="sub-nav">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">FAQs'</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to Audie Pino</h1>
+		<p><small>Your trusted top-notch customer support (virtual assistant or technical support), video editor, Google-article maker, business design, and/or personal and business website developer.</p>
+    </section>
+
+    <!-- PRODUCTS WITH PLAYABLE VIDEOS — 3 Top, 3 Bottom -->
+    <main class="products">
+        <!-- TOP ROW -->
+        <article class="product-card">
+            <div class="product-video">
+                <video controls preload="metadata" poster="">
+                    <source src="video-1-headphones.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button class="add-btn">Audie Pino Project 1</button>
+        </article>
+        
+        <article class="product-card">
+            <div class="product-video">
+                <video controls preload="metadata">
+                    <source src="video-2-smartwatch.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button class="add-btn">Audie Pino Project 2</button>
+        </article>
+        
+        <article class="product-card">
+            <div class="product-video">
+                <video controls preload="metadata">
+                    <source src="video-3-tshirt.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button class="add-btn">Audie Pino Project 3</button>
+        </article>
+
+        <!-- BOTTOM ROW -->
+        <article class="product-card">
+            <div class="product-video">
+                <video controls preload="metadata">
+                    <source src="video-4-waterbottle.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button class="add-btn">Audie Pino Project 4</button>
+        </article>
+        
+        <article class="product-card">
+            <div class="product-video">
+                <video controls preload="metadata">
+                    <source src="video-5-novel.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button class="add-btn">Audie Pino Project 5</button>
+        </article>
+        
+        <article class="product-card">
+            <div class="product-video">
+                <video controls preload="metadata">
+                    <source src="video-6-speaker.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div> 	
+            <button class="add-btn">Audie Pino Project 6</button>
+        </article>
+    </main>
+
+    <footer>		
+        <p class="copyright">© 2026 Audie Pino. All rights reserved.</p>
+    </footer>
+</body>
+</html>
